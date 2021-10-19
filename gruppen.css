@@ -1,0 +1,150 @@
+body{
+    background: #ececec;
+}
+
+#addField{
+  /*background-color: #008CBA;  Green */
+  background: #2196f3;
+  margin: auto;
+  width: 600px;
+    padding: 10px 16px;
+    color: white;
+}
+#addUser{
+  background: #1e7cc6;
+    padding: 16px
+}
+
+#serachField{
+  background: #1e7cc6;
+    padding: 16px;
+    margin-top: 16px;
+}
+#failMsg{
+  background-color: #ffdddd;
+  border-left: 6px solid #f44336;
+  color: black;
+  padding: 5px;
+  margin-top: 11px;
+  display: none;
+}
+
+#addedMsg{
+  background-color: #ddffdd;
+  border-left: 6px solid #04AA6D;
+  color: black;
+  padding: 5px;
+  margin-top: 11px;
+  display: none;
+}
+
+input[type=text] {
+  /*background-color: #0e9dcc;*/
+  background: white;
+      color: black;
+      border: 1px solid #07759a;
+      padding: 5px;
+      font-size: 15px;
+}
+
+#root{
+  background: #07759a;
+  background: #ececec;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+.driver{
+  margin: auto;
+  /*background-color: #008CBA; /* Green */
+  background: white;
+  border: none;
+  /*color: white;*/
+  color: black;
+  padding: 10px 16px;
+  text-decoration: none;
+  font-size: 16px;
+/*  border-top: 5px solid #0e9dcc;*/
+  border-top: 6px solid #2196F3;
+  width: 600px;
+  margin-bottom: 5px;
+}
+
+.driverInfo{
+
+}
+
+.lincenses{
+  background-color: #e7f3fe;
+ border-left: 6px solid #2196F3;
+  padding: 5px;
+  color: #626262;
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.success {
+  background-color: #ddffdd;
+  border-left: 6px solid #04AA6D;
+  padding: 5px;
+  color: #626262;
+  margin-top: 5px;
+}
+
+.bookBtn{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 7px;
+  margin-left: 7px;
+}
+
+#addPerson{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: fit-content;
+}
+
+#search{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: fit-content;
+}
+
+.cancelBtn{
+  background-color: #f44336; /* Green */
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.hide{
+  background: red !important;
+  display: none !important;
+}
+
+
+för mig tar det också 1.5 timme.

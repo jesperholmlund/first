@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="gruppen.css">
+    <title></title>
+  </head>
+  <body>
+    <div id="addField">
+      <div id="addUser">
+        <input type="text" name="" placeholder="Namn" id="firstName" value="">
+        <input type="text" name="" placeholder="Efternamn" id="lastName" value="">
+        <div id="addPerson" name="button">Lägg till</div><br>
+        Körkort:
+        <label for="aLincens">A</label>
+        <input type="checkbox" id="aLincens" name="aLincens" value="" checked>
+        <label for="bLincens">B</label>
+        <input type="checkbox" id="bLincens" name="bLincens" value="">
+        <label for="cLincens">C</label>
+        <input type="checkbox" id="cLincens" name="cLincens" value="">
+        <label for="dLincens">D</label>
+        <input type="checkbox" id="dLincens" name="dLincens" value="">
+        <label for="eLincens">E</label>
+        <input type="checkbox" id="eLincens" name="eLincens" value="">
+        <div id="failMsg">Du måste ange ett för- och efternamn</div>
+        <div id="addedMsg"></div>
+      </div>
+
+      <div id="serachField">
+        <input type="text" name="" value="" id="searchQuery" placeholder="Ange namn eller efternamn">
+        <div id="search" name="button">Sök</div>
+        <br>
+        Filtrera efter körkort
+        <label for="aSearch">A</label>
+        <input type="checkbox" id="aSearch" name="aSearch" value="">
+        <label for="bSearch">B</label>
+        <input type="checkbox" id="bSearch" name="bSearch" value="">
+        <label for="cSearch">C</label>
+        <input type="checkbox" id="cSearch" name="cSearch" value="">
+        <label for="dSearch">D</label>
+        <input type="checkbox" id="dSearch" name="dSearch" value="">
+        <label for="dSearch">E</label>
+        <input type="checkbox" id="eSearch" name="eSearch" value="">
+      </div>
+
+    </div>
+    <div id="root">
+
+
+    </div>
+
+    <script>
+      class Person{
+        constructor(name, lastName, lincenes){
+          this.name = name;
+          this.lastName = lastName;
+          this.info = "<input name='monday' type='checkbox'>monday<input name='tuesday' type='checkbox'>tuesday<input name='wednesday' type='checkbox'>wednesday<input name='thursday' type='checkbox'>thursday<input name='friday' type='checkbox'>friday<br>";
+          this.lincens = lincenes;
+        }
+        showInfo(){
+          //skapar tre variabler (div element)
+          //den första bara kallad div är vår så kallade container
+          //till den lägger vi till klassen driver (denna klass konfigurerar vi i vår separata CSS-ll)
+          const div = document.createElement("div");
+          div.classList.add("driver")
+
+          //här är på vårt title-getElementById
+          //vi sätter innerHTML till namnet, efternamn, sen lite random text och avslutar med att skapaa en div inne i denna för lincenser
+          //den div tillskrivs också¨class (lincenses) som vi konfigurerar i css-filen
+          const divTitle = document.createElement("div");
+          divTitle.innerHTML = this.name +" "+ this.lastName + " | Tryck för att boka | <div class='lincenses'>Körkort: " + this.lincens + "</div>";
+
+          const divInfo = document.createElement("div");
+          divInfo.classList.add("driverInfo");
+          divInfo.innerHTML = "" + this.info;
+          divInfo.classList.add("hide");
+
+          //här skapas ett div-element som tillskrivs klassen bookBtn och innerHTML med "boka namn"
+          let bookBtn = document.createElement("div")
+          bookBtn.classList.add("bookBtn");
+          bookBtn.innerHTML = "Boka " + this.name;
+
+          //samma princip som ovan, div element med en klass, denna gång cancelBtn, samt enbart texten "avbryt" som innerHTML
+          let cancelBtn = document.createElement("div");
+          cancelBtn.classList.add("cancelBtn");
+          cancelBtn.innerHTML = "Avbryt";
+
+          //appendChild används för att "lägga" något i nått annat. Relationen mellan elementen blir parent-child där child är innuti
+          //i detta fall lägger vi title- och info-element i vår div-Container
+          //slutligen lägger vi boka- och avbrytknappen innuti vår info-div
+          div.appendChild(divTitle);
+          div.appendChild(divInfo);
+          divInfo.appendChild(cancelBtn);
+          divInfo.appendChild(bookBtn);
+
+          //ett knep. Insåg att this.info osv inte fungerar inne i en funktion. Då skulle this peka på funktionen själv och den har inget värde för this.info
+          //det innebär att det som retuneras blir undefined eller annat error
+          //därför går det binda this.infot till en variabel. Variabeln kan sen användas inne i funktionen och peka på rätt this
+          let thatInfo = this.info;
+          let thatName = this.name;
+          bookBtn.addEventListener("click", function(){
+            //enda sättet jag kom på att få tag i checkboxarna för varje dag
+            //först notera att vi söker inom divInfo (en div vi skapade tidigare) och checkboxarna kommer från this.info deklarerad i klassen
+            let mondayCheck = divInfo.getElementsByTagName("input")[0];
+            let tuesdayCheck = divInfo.getElementsByTagName("input")[1];
+            let wednesdayCheck = divInfo.getElementsByTagName("input")[2];
+            let thursdayCheck = divInfo.getElementsByTagName("input")[3];
+            let fridayCheck = divInfo.getElementsByTagName("input")[4];
+
+            //vi skapar en ny div där vi skriver ut vilka dagar som man bokar
+            //vi ger den en css-klass och en enkel text där man får respons på vem man har bokat
+            //sen lägger vi den innuti vår div divInfo
+            let divInfoMsg = document.createElement("div");
+            divInfoMsg.classList.add("success");
+            divInfoMsg.innerHTML += "Du har bokat "+thatName+" följande dagar: ";
+            divInfo.appendChild(divInfoMsg);
+
+            //ganska simpelt. vi kollar varje checkbox är bockad geno checked == true. Om det är sans skrivs dagen ut i divInfoMsg
+            if(mondayCheck.checked == true){divInfoMsg.innerHTML += "<br>monday"}
+            if(tuesdayCheck.checked == true){divInfoMsg.innerHTML += "<br>tuesday"}
+            if(wednesdayCheck.checked == true){divInfoMsg.innerHTML += "<br>wednesday"}
+            if(thursdayCheck.checked == true){divInfoMsg.innerHTML += "<br>thursday"}
+            if(fridayCheck.checked == true){divInfoMsg.innerHTML += "<br>friday"}
+
+           //divInfoMsg.innerHTML += "<br>";
+           //döljer båda knappen boka och knappen avbry
+            bookBtn.style.display ="none"
+            cancelBtn.style.display ="none"
+          })
+          // om vi trycker på avbryt så lägger vi till klassen hide till divInfo, dvs gömmer den från rendering
+          //vi lägger även till vit bakgrund till vår div-container
+          cancelBtn.addEventListener("click", function(){
+            divInfo.classList.add("hide");
+            div.style.background = "#fff";
+          })
+
+
+          //om man trycker 0på divTitle så tar man bort klassen hide från divInfo
+          //hela div-container tillskrivs en ny bakgrund också. Bara så att den ska stå ut från mängden, vara markerad
+          divTitle.addEventListener("click",function(){
+              divInfo.classList.remove("hide");
+              div.style.background = "#fffbd9";
+          })
+          //allt ovan retuneras genom att retunera vår container div,
+          return div;
+
+        }
+      }
+
+      //root är det element jag använder för att skriva ut saker. Samma som när läraren använder output
+      let root = document.getElementById("root");
+
+      const persons = [];
+      let person1 = new Person("Adam", "Adamsson", "A");
+      let person2 = new Person("Adam", "Adamsson", "A,B");
+      let person3 = new Person("Bertil", "Bertilsson", "A,B,C");
+      let person4 = new Person("Cesar", "cesarsson", "A");
+      let person5 = new Person("David", "Davidsson", "A,B,E");
+      let person6 = new Person("Erik", "Eriksson", "A,B,C,D");
+
+      persons.push(person1);
+      persons.push(person2);
+      persons.push(person3);
+      persons.push(person4);
+      persons.push(person5);
+      persons.push(person6);
+
+      root.appendChild(person1.showInfo());
+      root.appendChild(person2.showInfo());
+      root.appendChild(person3.showInfo());
+      root.appendChild(person4.showInfo());
+      root.appendChild(person5.showInfo());
+      root.appendChild(person6.showInfo());
+
+      let lincenes = [];
+
+      //skriver ett klickevent till knappen lägg till
+      document.getElementById("addPerson").addEventListener("click", function(){
+        //börjar med att gömma eventuella meddelanden från tidigare tillagd person
+        document.getElementById('addedMsg').style.display = "none"
+        document.getElementById('failMsg').style.display = "none"
+        //håmtar värden för namn och efternamn
+        let firstName = document.getElementById("firstName").value;
+        let lastName = document.getElementById("lastName").value;
+
+        //kollar om både namn och efternamn är skrivna. om båda tomma så kommer ett felmeddelande att skrivas ut
+        if(firstName == "" || lastName == ""){
+          document.getElementById('failMsg').style.display = "block"
+          return
+          //om båda är fyllda börjar vi att checka var checkbox för sig
+          //vi hämtar deras checkvärde genom .checked i slutet
+          //sen kör vi en if sats, om check == true så skriver vi ut bokstav till arrayen lincenser
+          //sen försöker vi sätt checkboxen till false (avmarkerar) / men verkar inte gå
+        }else{
+          let aLincens = document.getElementById("aLincens").checked;
+          if(aLincens == true){
+            lincenes.push("A");
+            aLincens == false;
+          }
+          let bLincens = document.getElementById("bLincens",).checked;
+          if(bLincens == true){
+            lincenes.push("B");
+          }
+          let cLincens = document.getElementById("cLincens").checked;
+          if(cLincens == true){
+            lincenes.push("C")
+          }
+          let dLincens = document.getElementById("dLincens").checked;
+          if(dLincens == true){
+            lincenes.push("D")
+          }
+          let eLincens = document.getElementById("eLincens").checked;
+          if(eLincens == true){
+            lincenes.push("E")
+          }
+          //addeMSG för att verifiera att nån lagts tiill. div-elemetet går från display = "none" till ett block
+          //samtidigt skriver vi ut namn och efternamn som innerHTML. Dessa kjommer från variabler tidigare i denna funktion
+          document.getElementById('addedMsg').style.display = "block"
+          document.getElementById('addedMsg').innerHTML = firstName + " " + lastName + " har lagts till";
+          //vi lägger till denna nya person i vår klass samt pushar in den i arrayen som alla klass objekt existerar i
+          let person = new Person(firstName, lastName, lincenes);
+          persons.push(person);
+
+          //vi tömmer root (där alla namn med körkort och bokningar finns)
+          root.innerHTML = "";
+          //skriver ut arrayen med alla personer i root
+          //den nya personen har pushas till arrayen och skrivs därför ut igen
+          persons.forEach((element, i) =>{
+            root.appendChild(element.showInfo());
+          });
+          //tömmer lincens arrayen. Om vi inte gör det så kommer vi vid nästa gång att behålla alla lincenser och nästa person får dubbla lincenser
+          lincenes = []
+        }
+      });
+
+      //sökfunktion börjar med att ta ut värdet från en input. Sen gör vi värdet till små bokstäver
+      document.getElementById("search").addEventListener("click", function(){
+        let searchQuery = document.getElementById("searchQuery").value.toLowerCase();
+        //vi tömemr root
+        root.innerHTML = ""
+        //vi går igenom vår array med personer och har ett villkor
+        //personens namn gör vi först till smp bokstäver. sen kollar vi om namnet innehåller vårt sökord (som också är i små bokstäver)
+        //vi jämför också sökordet med våra efternamn. Även efternamn kör vi först till små bokstäver och sen kollar om dom inkluderar sökordet
+        //om en person innehåller sökordet skriver vi ut personen i root
+        persons.forEach((person, i) => {
+          if (person.name.toLowerCase().includes(searchQuery) || person.lastName.toLowerCase().includes(searchQuery)){
+            console.log(person)
+            root.appendChild(person.showInfo())
+            }
+      })
+    })
+
+    //här är alla körkkort vi kan söka via checkboxarna
+    //trycker man på en box rensar man först root
+    //sen kollar man med en if-sats om personens lincens inkluderar relevant bokstav
+    document.getElementById("aSearch").addEventListener("click", function(){
+      root.innerHTML = ""
+      persons.forEach((person, i) => {
+        if (person.lincens.includes("A")){
+          console.log(person)
+          root.appendChild(person.showInfo())
+        }
+    })
+    //när man avcheckar en tömmer vi root och skriver ut alla personer igen
+    if( document.getElementById("aSearch").checked == false){
+          root.innerHTML = ""
+          persons.forEach((person, i) => {
+          root.appendChild(person.showInfo())
+          })
+        }
+    })
+
+    document.getElementById("bSearch").addEventListener("click", function(){
+      root.innerHTML = ""
+      persons.forEach((person, i) => {
+        if (person.lincens.includes("B")){
+          console.log(person)
+          root.appendChild(person.showInfo())
+        }
+    })
+    if( document.getElementById("bSearch").checked == false){
+          root.innerHTML = ""
+          persons.forEach((person, i) => {
+            root.appendChild(person.showInfo())
+          })
+        }
+    })
+
+    document.getElementById("cSearch").addEventListener("click", function(){
+      root.innerHTML = ""
+      persons.forEach((person, i) => {
+        if (person.lincens.includes("C")){
+          console.log(person)
+          root.appendChild(person.showInfo())
+        }
+    })
+    if( document.getElementById("cSearch").checked == false){
+          root.innerHTML = ""
+          persons.forEach((person, i) => {
+            root.appendChild(person.showInfo())
+          })
+        }
+    })
+
+    document.getElementById("dSearch").addEventListener("click", function(){
+      root.innerHTML = ""
+      persons.forEach((person, i) => {
+        if (person.lincens.includes("D")){
+          console.log(person)
+          root.appendChild(person.showInfo())
+        }
+    })
+    if( document.getElementById("dSearch").checked == false){
+          root.innerHTML = ""
+          persons.forEach((person, i) => {
+            root.appendChild(person.showInfo())
+          })
+        }
+    })
+
+    document.getElementById("eSearch").addEventListener("click", function(){
+      root.innerHTML = ""
+      persons.forEach((person, i) => {
+        if (person.lincens.includes("E")){
+          console.log(person)
+          root.appendChild(person.showInfo())
+        }
+    })
+    if( document.getElementById("eSearch").checked == false){
+          root.innerHTML = ""
+          persons.forEach((person, i) => {
+            root.appendChild(person.showInfo())
+          })
+        }
+    })
+
+
+    </script>
+  </body>
+</html>
